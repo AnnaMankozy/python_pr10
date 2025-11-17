@@ -6,7 +6,7 @@ filename = "data.csv"
 years = ['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024']
 data = {}
 
-with open(filename, "r", encoding="utf-8-sig", newline='') as file:
+with open(filename, "r", newline='') as file:
     reader = csv.reader(file, delimiter=';')
     for row in reader:
         country = row[0].strip()
