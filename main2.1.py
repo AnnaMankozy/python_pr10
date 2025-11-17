@@ -6,7 +6,6 @@ filename = "data.csv"
 years = ['2015','2016','2017','2018','2019','2020','2021','2022','2023','2024']
 data = {}
 
-# Використовуємо newline='' щоб Python не додавав зайві \r
 with open(filename, "r", encoding="utf-8-sig", newline='') as file:
     reader = csv.reader(file, delimiter=';')
     for row in reader:
@@ -27,5 +26,5 @@ if "Spain" in data and "Mexico" in data:
     plt.grid(True)
     plt.show()
 else:
-    print("⚠ Не знайдено одну з країн!")
+    print("Не знайдено одну з країн!")
     print("Є такі країни:", list(data.keys()))

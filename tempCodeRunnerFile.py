@@ -1,43 +1,32 @@
 import csv
 import matplotlib.pyplot as plt
 
-filename = "data.csv"
+FILENAME = "data.csv"
 
-countries = []
-years = []
-data = {}
+# Завантажуємо дані з CSV
+countries = {}
 
-with open(filename, "r", encoding="utf-8") as file:
-    reader = csv.reader(file)
-    header = next(reader)
-
-    years = header[4:]
-
+with open(FILENAME, "r", encoding="utf-8") as file:
+    reader = csv.reader(file, delimiter=';')
     for row in reader:
-        country = row[0]
-        countries.append(country)
-        values = list(map(int, row[4:]))
-        data[country] = values
+        if len(row) >= 14:  # 4 колонки + 10 значень
+            country_name = row[0]
+            values = list(map(int, row[4:14]))  # беремо 10 значень
+            countries[country_name] = values
 
-plt.plot(years, data["Spain"], label="Spain", linewidth=3)
-plt.plot(years, data["Mexico"], label="Mexico", linewidth=3)
+# Виводимо список країн
+print("Доступні країни:", list(countries.keys()))
 
-plt.title("Young people newly infected with HIV")
-plt.xlabel("Year")
-plt.ylabel("Indicator value")
+user_country = input("Введіть назву країни: ")
 
-plt.legend()
-plt.grid(True)
-plt.show()
-
-user_country = input("Enter country name (Spain/Mexico): ")
-
-if user_country in data:
-    plt.bar(years, data[user_country])
-    plt.title(f"Indicator for {user_country}")
-    plt.xlabel("Year")
-    plt.ylabel("Value")
-    plt.grid(True)
-    plt.show()
+if user_country not in countries:
+    print("❌ Такої країни немає у файлі!")
 else:
-    print("Country not found in file.")
+    data = countries[user_country]
+    years = list(range(2015, 2025))
+    plt.bar(years, data)
+    plt.xlabel("Рік")
+    plt.ylabel("Значення показника")
+    plt.title(f"Показник для країни: {user_country}")
+    plt.grid(axis="y")
+    plt.show()
